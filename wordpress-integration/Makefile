@@ -33,26 +33,10 @@ install_wp_cli:
 	curl -o $(BIN_DIR)/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x $(BIN_DIR)/wp
 
-install_wp: setup_wp_core setup_wp_config setup_wp_db
+install_wp: setup_wp_core
 
 setup_wp_core:
 	wp core download $(ALLOW_ROOT) --force --path="$(WORDPRESS_DIR)"
-
-setup_wp_config:
-	wp config create $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --force \
-		--dbname="${WORDPRESS_DB_NAME}" \
-		--dbuser="${WORDPRESS_DB_USER}" \
-		--dbpass="${WORDPRESS_DB_PASSWORD}" \
-		--dbhost="${WORDPRESS_DB_HOST}"
-
-setup_wp_db:
-	wp db reset $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --yes
-	wp core install $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --skip-email \
-		--url="http://localhost:3000" \
-		--title="Test" \
-		--admin_user="test" \
-		--admin_password="test" \
-		--admin_email="test@test.com"
 
 test:
 	/root/.composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=unit-tests
