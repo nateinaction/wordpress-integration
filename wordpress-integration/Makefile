@@ -1,0 +1,94 @@
+.PHONY: test build
+
+# User editable vars
+WORDPRESS_VERSION ?= latest
+WORDPRESS_DB_NAME ?= wordpress
+WORDPRESS_DB_USER ?= wordpress
+WORDPRESS_DB_PASSWORD ?= password
+WORDPRESS_DB_HOST ?= localhost
+WORDPRESS_DIR ?= /tmp/wordpress
+WORDPRESS_TEST_HARNESS_DIR ?= /tmp/wordpress-test-harness
+BIN_DIR ?= /usr/local/bin
+SVN_DIR ?= svn
+
+# Shortcuts
+DOCKER_TAG := wordpress-integration
+DOCKER_RUN := @docker run -it --rm -v `pwd`:/workspace
+DOCKER_SHELL := $(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash"
+ALLOW_ROOT := --allow-root
+START_MYSQL := /etc/init.d/mysql start;
+
+DOCKER_COMPOSE := @docker-compose -f docker/docker-compose.yml
+DOCKER_EXEC := exec -u www-data wordpress /bin/bash -c
+CD_TO_PLUGIN := cd wp-content/plugins/$(PLUGIN_NAME);
+
+# Commands
+all: docker_build docker_all
+
+shell:
+	$(DOCKER_SHELL)
+
+docker_build:
+	docker build -t $(DOCKER_TAG) ./docker/
+
+docker_all:
+	$(DOCKER_SHELL) -c "$(START_MYSQL) make install test"
+
+docker_setup_wp_core:
+	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "make setup_wp_core"
+
+docker_start:
+	$(DOCKER_COMPOSE) up -d --build
+
+docker_stop:
+	$(DOCKER_COMPOSE) stop
+
+docker_clean:
+	$(DOCKER_COMPOSE) stop | true
+	$(DOCKER_COMPOSE) rm -vf
+
+docker_test:
+	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "$(CD_TO_PLUGIN) make test"
+
+docker_phpunit:
+	docker run --rm -v `pwd`:/workspace wordpress-integration $(test_cmd)
+
+docker_phpcbf:
+	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "$(CD_TO_PLUGIN) make phpcbf"
+
+install: composer_self_update composer_install install_wp_cli install_wp
+
+composer_self_update:
+	composer self-update
+
+composer_install:
+	composer install -o --prefer-dist --no-interaction
+
+install_wp_cli:
+	curl -o $(BIN_DIR)/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x $(BIN_DIR)/wp
+
+install_wp: setup_wp_core setup_wp_config setup_wp_db
+
+setup_wp_core:
+	wp core download $(ALLOW_ROOT) --force --path="$(WORDPRESS_DIR)"
+
+setup_wp_config:
+	wp config create $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --force \
+		--dbname="${WORDPRESS_DB_NAME}" \
+		--dbuser="${WORDPRESS_DB_USER}" \
+		--dbpass="${WORDPRESS_DB_PASSWORD}" \
+		--dbhost="${WORDPRESS_DB_HOST}"
+
+setup_wp_db:
+	wp db reset $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --yes
+	wp core install $(ALLOW_ROOT) --path="$(WORDPRESS_DIR)" --skip-email \
+		--url="http://localhost:3000" \
+		--title="Test" \
+		--admin_user="test" \
+		--admin_password="test" \
+		--admin_email="test@test.com"
+
+test:
+	./vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=unit-tests
+
