@@ -26,9 +26,12 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 # Set perms on site and bin dirs
 RUN chown -R www-data:www-data /var/www/ /usr/local/bin/
 
-# Install Composer
+# Install composer
 COPY bin/install-composer.sh /tmp/
 RUN /tmp/install-composer.sh
+
+# Install phpunit via composer
+RUN composer global require phpunit/phpunit:^6.5
 
 # Env vars
 ENV WORDPRESS_VERSION latest

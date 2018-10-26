@@ -1,4 +1,4 @@
-.PHONY: test build
+.PHONY: test
 
 # User editable vars
 WORDPRESS_VERSION ?= latest
@@ -9,7 +9,6 @@ WORDPRESS_DB_HOST ?= localhost
 WORDPRESS_DIR ?= /tmp/wordpress
 WORDPRESS_TEST_HARNESS_DIR ?= /tmp/wordpress-test-harness
 BIN_DIR ?= /usr/local/bin
-SVN_DIR ?= svn
 
 # Shortcuts
 DOCKER_TAG := wordpress-integration
@@ -18,12 +17,9 @@ DOCKER_SHELL := $(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash"
 ALLOW_ROOT := --allow-root
 START_MYSQL := /etc/init.d/mysql start;
 
-DOCKER_COMPOSE := @docker-compose -f docker/docker-compose.yml
-DOCKER_EXEC := exec -u www-data wordpress /bin/bash -c
-CD_TO_PLUGIN := cd wp-content/plugins/$(PLUGIN_NAME);
-
 # Commands
-all: docker_build docker_all
+all: docker_build
+	$(DOCKER_SHELL) -c "$(START_MYSQL) make install test"
 
 shell:
 	$(DOCKER_SHELL)
@@ -31,38 +27,7 @@ shell:
 docker_build:
 	docker build -t $(DOCKER_TAG) ./docker/
 
-docker_all:
-	$(DOCKER_SHELL) -c "$(START_MYSQL) make install test"
-
-docker_setup_wp_core:
-	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "make setup_wp_core"
-
-docker_start:
-	$(DOCKER_COMPOSE) up -d --build
-
-docker_stop:
-	$(DOCKER_COMPOSE) stop
-
-docker_clean:
-	$(DOCKER_COMPOSE) stop | true
-	$(DOCKER_COMPOSE) rm -vf
-
-docker_test:
-	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "$(CD_TO_PLUGIN) make test"
-
-docker_phpunit:
-	docker run --rm -v `pwd`:/workspace wordpress-integration $(test_cmd)
-
-docker_phpcbf:
-	$(DOCKER_COMPOSE) $(DOCKER_EXEC) "$(CD_TO_PLUGIN) make phpcbf"
-
-install: composer_self_update composer_install install_wp_cli install_wp
-
-composer_self_update:
-	composer self-update
-
-composer_install:
-	composer install -o --prefer-dist --no-interaction
+install: install_wp_cli install_wp
 
 install_wp_cli:
 	curl -o $(BIN_DIR)/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -90,5 +55,5 @@ setup_wp_db:
 		--admin_email="test@test.com"
 
 test:
-	./vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=unit-tests
+	/root/.composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=unit-tests
 
