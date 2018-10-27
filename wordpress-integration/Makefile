@@ -11,7 +11,7 @@ shell:
 	$(DOCKER_RUN) -it $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) /bin/bash"
 
 build:
-	@docker build -t $(DOCKER_TAG) ./docker/
+	@docker build -t $(DOCKER_TAG) .
 
 test:
 	$(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) make phpunit_test"
