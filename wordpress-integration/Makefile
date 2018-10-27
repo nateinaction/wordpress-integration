@@ -1,20 +1,21 @@
 .PHONY: test
 
 DOCKER_TAG := wordpress-integration
-DOCKER_RUN := @docker run -it --rm -v `pwd`:/workspace
-DOCKER_SHELL := $(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash"
-ALLOW_ROOT := --allow-root
+DOCKER_VOLUME := -v `pwd`:/workspace
+DOCKER_RUN := @docker run --rm $(DOCKER_VOLUME)
 START_MYSQL := /etc/init.d/mysql start;
 
-all: docker_build
-	$(DOCKER_SHELL) -c "$(START_MYSQL) make test"
+all: build test
 
 shell:
-	$(DOCKER_SHELL)
+	$(DOCKER_RUN) -it $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) /bin/bash"
 
-docker_build:
-	docker build -t $(DOCKER_TAG) ./docker/
+build:
+	@docker build -t $(DOCKER_TAG) ./docker/
 
 test:
-	/root/.composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=unit-tests
+	$(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) make phpunit_test"
+
+phpunit_test:
+	/root/.composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite="integration-tests"
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-WORDPRESS_VERSION=${WORDPRESS_VERSION-latest}
-WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME-wordpress}
-WORDPRESS_DB_USER=${WORDPRESS_DB_USER-wordpress}
-WORDPRESS_DB_PASS=${WORDPRESS_DB_PASS-password}
-WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST-localhost}
-WORDPRESS_SVN_DIR=${WORDPRESS_SVN_DIR-/wordpress}
+# Script expects these vars to be present
+WORDPRESS_VERSION=${WORDPRESS_VERSION}
+WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+WORDPRESS_DB_PASS=${WORDPRESS_DB_PASS}
+WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+WORDPRESS_SVN_DIR=${WORDPRESS_SVN_DIR}
 
+# Determine WordPress version
 if [[ ${WORDPRESS_VERSION} =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
     WP_TESTS_TAG="tags/${WORDPRESS_VERSION}"
 elif [[ ${WORDPRESS_VERSION} == 'nightly' || ${WORDPRESS_VERSION} == 'trunk' ]]; then
@@ -29,17 +31,13 @@ while ${TRUNCATED}; do
     SVN_RESPONSE=`svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/ ${WORDPRESS_SVN_DIR}`
     rc=$?;
     if [[ $rc != 0 ]]; then
-        echo 'SVN checkout was interupted. Retrying...'
+        echo 'SVN checkout was interrupted. Retrying...'
         svn cleanup --quiet ${WORDPRESS_SVN_DIR}
         svn up --quiet ${WORDPRESS_SVN_DIR}
         continue
     fi
     TRUNCATED=false
 done
-
-# if response contains "The server sent a truncated HTTP response body"
-# svn cleanup
-# svn up
 
 # Configure test config
 WORDPRESS_TEST_HARNESS_CONFIG="${WORDPRESS_SVN_DIR}/wp-tests-config.php"
