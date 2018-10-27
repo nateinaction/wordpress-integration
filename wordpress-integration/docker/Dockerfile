@@ -48,7 +48,7 @@ RUN /etc/init.d/mysql start \
     && mysql -e "GRANT ALL PRIVILEGES ON *.* TO '${WORDPRESS_DB_USER}'@'${WORDPRESS_DB_HOST}' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';"
 
 # Install test harness
-COPY bin/install-wp-test-harness.sh /tmp/
-RUN /tmp/install-wp-test-harness.sh
+COPY bin/install-test-harness.sh /tmp/
+RUN /tmp/install-test-harness.sh
 
 WORKDIR /workspace
