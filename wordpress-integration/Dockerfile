@@ -29,7 +29,7 @@ ENV WORDPRESS_DB_HOST 127.0.0.1
 ENV WORDPRESS_SVN_DIR /wordpress
 
 # Start and configure mysql
-RUN /etc/init.d/mysql start \
+RUN service mysql start \
     && mysql -e "CREATE DATABASE ${WORDPRESS_DB_NAME};" -uroot \
     && mysql -e "GRANT ALL PRIVILEGES ON *.* TO '${WORDPRESS_DB_USER}'@'${WORDPRESS_DB_HOST}' IDENTIFIED BY '${WORDPRESS_DB_PASS}';"
 

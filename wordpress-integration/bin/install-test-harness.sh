@@ -25,15 +25,23 @@ else
     WP_TESTS_TAG="tags/${LATEST_VERSION}"
 fi
 
-# Checkout WordPress svn with retry logic... meh
+# Checkout WordPress svn with retry logic
+RETRY_COUNT=0
 TRUNCATED=true
+echo 'WordPress SVN checkout started.'
 while ${TRUNCATED}; do
-    SVN_RESPONSE=`svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/ ${WORDPRESS_SVN_DIR}`
+    if [[ ${RETRY_COUNT} == 5 ]]; then
+        echo 'SVN checkout failed after ${RETRY_COUNT} attempts.'
+        exit 1
+    fi
+
+    svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/ ${WORDPRESS_SVN_DIR}
     rc=$?;
-    if [[ $rc != 0 ]]; then
+    if [[ ${rc} != 0 ]]; then
         echo 'SVN checkout was interrupted. Retrying...'
         svn cleanup --quiet ${WORDPRESS_SVN_DIR}
         svn up --quiet ${WORDPRESS_SVN_DIR}
+        ((RETRY_COUNT++))
         continue
     fi
     TRUNCATED=false
