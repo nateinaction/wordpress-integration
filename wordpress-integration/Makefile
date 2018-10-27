@@ -1,11 +1,10 @@
 .PHONY: test
 
 DOCKER_TAG := wordpress-integration
-DOCKER_VOLUME := -v `pwd`:/workspace
-DOCKER_RUN := @docker run --rm $(DOCKER_VOLUME)
-START_MYSQL := /etc/init.d/mysql start;
+DOCKER_RUN := @docker run --rm -v `pwd`:/workspace
+START_MYSQL := service mysql start;
 
-all: build test
+all: build composer_install test
 
 shell:
 	$(DOCKER_RUN) -it $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) /bin/bash"
@@ -16,6 +15,9 @@ build:
 test:
 	$(DOCKER_RUN) $(DOCKER_TAG) "/bin/bash" -c "$(START_MYSQL) make phpunit_test"
 
+composer_install:
+	$(DOCKER_RUN) -v `pwd`:/app composer install -d "./composer"
+
 phpunit_test:
-	/root/.composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite="integration-tests"
+	./composer/vendor/bin/phpunit -c "./test/phpunit.xml" --testsuite="integration-tests"
 

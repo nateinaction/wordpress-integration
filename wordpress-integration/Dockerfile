@@ -5,20 +5,10 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
-    git \
     mysql-client \
     mysql-server \
     subversion \
-    unzip \
-    zip \
     ;
-
-# Install composer
-COPY bin/install-composer.sh /tmp/
-RUN /tmp/install-composer.sh
-
-# Install phpunit via composer
-RUN composer global require phpunit/phpunit:^6.5
 
 # Env vars
 ENV WORDPRESS_VERSION latest
