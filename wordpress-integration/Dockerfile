@@ -33,6 +33,9 @@ ENV WORDPRESS_SVN_DIR /wordpress
 COPY bin/install-test-harness.sh /usr/local/bin/
 RUN install-test-harness.sh
 
+# Copy mysql ignition script
+COPY bin/start-and-configure-mysql.sh /usr/local/bin/
+
 WORKDIR /workspace
 
 # Setup entrypoint
