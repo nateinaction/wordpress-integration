@@ -1,0 +1,19 @@
+sudo: 'required'
+notifications:
+  email: false
+
+services:
+  - 'docker'
+
+cache:
+  directories:
+    - $HOME/composer/vendor
+
+script:
+  - 'make'
+
+after_success:
+  - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+      docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
+      make publish;
+    fi

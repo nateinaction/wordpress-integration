@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
     ;
 
 # Env vars
-ENV WORDPRESS_VERSION latest
+ENV WORDPRESS_VERSION 4.9.8
 ENV WORDPRESS_DB_NAME wordpress
 ENV WORDPRESS_DB_USER wordpress
 ENV WORDPRESS_DB_PASS password

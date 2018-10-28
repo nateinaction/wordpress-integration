@@ -16,6 +16,9 @@ lint_bash:
 build:
 	@docker build -t $(DOCKER_TAG) .
 
+publish:
+	@docker push $(DOCKER_TAG)
+
 test:
 	@$(DOCKER_RUN) -it $(DOCKER_TAG) "/workspace/composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=integration-tests"
 
