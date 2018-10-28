@@ -31,16 +31,16 @@ TRUNCATED=true
 echo 'WordPress SVN checkout started.'
 while ${TRUNCATED}; do
     if [[ ${RETRY_COUNT} == 5 ]]; then
-        echo 'SVN checkout failed after ${RETRY_COUNT} attempts.'
+        echo "SVN checkout failed after ${RETRY_COUNT} attempts."
         exit 1
     fi
 
-    svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/ ${WORDPRESS_SVN_DIR}
+    svn co --quiet "https://develop.svn.wordpress.org/${WP_TESTS_TAG}/" "${WORDPRESS_SVN_DIR}"
     rc=$?;
     if [[ ${rc} != 0 ]]; then
         echo 'SVN checkout was interrupted. Retrying...'
-        svn cleanup --quiet ${WORDPRESS_SVN_DIR}
-        svn up --quiet ${WORDPRESS_SVN_DIR}
+        svn cleanup --quiet "${WORDPRESS_SVN_DIR}"
+        svn up --quiet "${WORDPRESS_SVN_DIR}"
         ((RETRY_COUNT++))
         continue
     fi
@@ -54,4 +54,3 @@ sed -i "s/youremptytestdbnamehere/${WORDPRESS_DB_NAME}/" "${WORDPRESS_TEST_HARNE
 sed -i "s/yourusernamehere/${WORDPRESS_DB_USER}/" "${WORDPRESS_TEST_HARNESS_CONFIG}"
 sed -i "s/yourpasswordhere/${WORDPRESS_DB_PASS}/" "${WORDPRESS_TEST_HARNESS_CONFIG}"
 sed -i "s|localhost|${WORDPRESS_DB_HOST}|" "${WORDPRESS_TEST_HARNESS_CONFIG}"
-

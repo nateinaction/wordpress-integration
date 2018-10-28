@@ -1,25 +1,17 @@
-FROM wordpress:php7.2
+FROM php:7.2
 
 # Install xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
+# Install mysqli php extension
+RUN docker-php-ext-install mysqli
+
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
-	git \
     mysql-client \
     mysql-server \
     subversion \
-    unzip \
-    zip \
     ;
-
-# Install composer
-COPY ./bin/install-composer.sh /usr/local/bin/
-RUN install-composer.sh
-
-# Install phpunit
-COPY ./composer/composer.json ./composer/composer.lock /composer/
-RUN composer install -d /composer
 
 # Env vars
 ENV WORDPRESS_VERSION latest
@@ -33,11 +25,8 @@ ENV WORDPRESS_SVN_DIR /wordpress
 COPY bin/install-test-harness.sh /usr/local/bin/
 RUN install-test-harness.sh
 
-# Copy mysql ignition script
-COPY bin/start-and-configure-mysql.sh /usr/local/bin/
-
-WORKDIR /workspace
-
 # Setup entrypoint
 COPY ./bin/entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+WORKDIR /workspace
