@@ -1,6 +1,6 @@
 .PHONY: test
 
-DOCKER_TAG := wordpress-integration
+DOCKER_TAG := nateinaction/wordpress-integration
 DOCKER_RUN := docker run --rm -v `pwd`:/workspace
 DOCKER_RUN_COMPOSER := $(DOCKER_RUN) -v `pwd`:/app composer
 COMPOSER_DIR := -d "./composer"
