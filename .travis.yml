@@ -1,16 +1,24 @@
-sudo: 'required'
+sudo: required
+services: docker
 notifications:
   email: false
 
-services:
-  - 'docker'
+env:
+  global:
+    - IMAGE_NAME=nateinaction/wordpress-integration
+  matrix:
+    - PHP_VERSION=7.2
+    - PHP_VERSION=7.1
+    - PHP_VERSION=7.0
 
 cache:
   directories:
-    - $HOME/composer/vendor
+    - PHP_7.2/vendor
+    - PHP_7.1/vendor
+    - PHP_7.0/vendor
 
 script:
-  - 'make'
+  - make
 
 after_success:
   - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then

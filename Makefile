@@ -1,29 +1,33 @@
 .PHONY: test
 
-DOCKER_TAG := nateinaction/wordpress-integration
+PHP_VERSION ?= 7.2
+PHP_LATEST := 7.2
+PHP_DIR := PHP_$(PHP_VERSION)
+DOCKERFILE := $(PHP_DIR)/Dockerfile
+DOCKER_IMAGE_NAME := nateinaction/wordpress-integration
 DOCKER_RUN := docker run --rm -v `pwd`:/workspace
-DOCKER_RUN_COMPOSER := $(DOCKER_RUN) -v `pwd`:/app composer
-COMPOSER_DIR := -d "./composer"
+COMPOSER_DIR := -d "/workspace/$(PHP_DIR)"
 
 all: lint_bash build composer_install test
 
 shell:
-	@$(DOCKER_RUN) -it $(DOCKER_TAG) "/bin/bash"
+	$(DOCKER_RUN) -it $(DOCKER_IMAGE_NAME) "/bin/bash"
 
 lint_bash:
 	@for file in `find bin -type f -name "*.sh"`; do $(DOCKER_RUN) koalaman/shellcheck --format=gcc /workspace/$$file; done;
 
 build:
-	@docker build -t $(DOCKER_TAG) .
+	docker build -t $(DOCKER_IMAGE_NAME):$(PHP_DIR) -f $(DOCKERFILE) .
 
 publish:
-	@docker push $(DOCKER_TAG)
+	if [[ "$(PHP_LATEST)" == "$(PHP_VERSION)" ]]; then docker tag $(DOCKER_IMAGE_NAME):$(PHP_DIR) $(DOCKER_IMAGE_NAME):latest; fi
+	docker push $(DOCKER_IMAGE_NAME)
 
 test:
-	@$(DOCKER_RUN) -it $(DOCKER_TAG) "/workspace/composer/vendor/bin/phpunit -c ./test/phpunit.xml --testsuite=integration-tests"
+	$(DOCKER_RUN) -it $(DOCKER_IMAGE_NAME) "/workspace/$(PHP_DIR)/vendor/bin/phpunit --bootstrap ./test/bootstrap.php ./test"
 
 composer_install:
-	@$(DOCKER_RUN_COMPOSER) install $(COMPOSER_DIR)
+	$(DOCKER_RUN) composer install $(COMPOSER_DIR)
 
 composer_update:
-	@$(DOCKER_RUN_COMPOSER) update $(COMPOSER_DIR)
+	$(DOCKER_RUN) composer update $(COMPOSER_DIR)

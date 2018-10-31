@@ -15,6 +15,19 @@ class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	 */
 	public function test_inside_wordpress_environment() {
 		$inside_wordpress_environment = function_exists('wp_kses');
-		$this->assertTrue( $inside_wordpress_environment );
+		$this->assertTrue($inside_wordpress_environment);
+	}
+
+	/**
+	 * Test verify extensions installed
+	 *
+	 * Extensions installed: memcached and xdebug
+	 */
+	public function test_php_extensions_installed() {
+		$memcached_installed = class_exists('Memcached');
+		$this->assertTrue($memcached_installed);
+
+		$xdebug_installed = function_exists('xdebug_break');
+		$this->assertTrue($xdebug_installed);
 	}
 }

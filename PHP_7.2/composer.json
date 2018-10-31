@@ -9,8 +9,12 @@
             "email": "email@nategay.me"
         }
     ],
-    "require": {},
-    "require-dev": {
+    "config": {
+        "platform": {
+            "php": "7.2"
+        }
+    },
+    "require": {
         "phpunit/phpunit": "^6.5"
     }
 }
