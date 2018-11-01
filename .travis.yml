@@ -4,18 +4,13 @@ notifications:
   email: false
 
 env:
-  global:
-    - IMAGE_NAME=nateinaction/wordpress-integration
-  matrix:
-    - PHP_VERSION=7.2
-    - PHP_VERSION=7.1
-    - PHP_VERSION=7.0
+  - PHP_VERSION=7.2
+  - PHP_VERSION=7.1
+  - PHP_VERSION=7.0
 
 cache:
   directories:
-    - PHP_7.2/vendor
-    - PHP_7.1/vendor
-    - PHP_7.0/vendor
+    - ${PHP_VERSION}/vendor
 
 script:
   - make

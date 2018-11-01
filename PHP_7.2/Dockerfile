@@ -2,21 +2,16 @@ FROM php:7.2
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
-	libmemcached-dev \
-	libz-dev \
     mysql-client \
     mysql-server \
     subversion \
     ;
 
-# Install pecl dependencies
-RUN pecl install memcached xdebug
+# Install and enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-# Install PHP extensions
+# Install mysqli
 RUN docker-php-ext-install mysqli
-
-# Enable PHP extensions
-RUN docker-php-ext-enable memcached xdebug
 
 # Env vars
 ENV WORDPRESS_VERSION 4.9.8

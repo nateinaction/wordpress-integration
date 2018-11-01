@@ -21,12 +21,9 @@ class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	/**
 	 * Test verify extensions installed
 	 *
-	 * Extensions installed: memcached and xdebug
+	 * Extensions installed: xdebug
 	 */
 	public function test_php_extensions_installed() {
-		$memcached_installed = class_exists('Memcached');
-		$this->assertTrue($memcached_installed);
-
 		$xdebug_installed = function_exists('xdebug_break');
 		$this->assertTrue($xdebug_installed);
 	}
