@@ -12,7 +12,7 @@ env:
 
 cache:
   directories:
-    - ${PHP_VERSION}/vendor
+    - ${PHP_VERSION}/cache
 
 script:
   - make
