@@ -1,4 +1,5 @@
-# WordPress Integration Test Docker
+# WordPress Integration Docker Image
+[![Build Status](https://travis-ci.org/nateinaction/wordpress-integration.svg?branch=master)](https://travis-ci.org/nateinaction/wordpress-integration)
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
 
