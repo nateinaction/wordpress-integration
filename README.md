@@ -2,7 +2,7 @@
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
 
-Integration testing couldn't be easier!
+Testing your plugin has never been easier!
 
 ```bash
 docker run --rm -v `pwd`:/workspace nateinaction/wordpress-integration ./vendor/bin/phpunit ./test-dir
