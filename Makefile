@@ -16,7 +16,7 @@ shell:
 	$(DOCKER_RUN) -it $(DOCKER_IMAGE_NAME) "/bin/bash"
 
 lint_bash:
-	@for file in `find bin -type f -name "*.sh"`; do $(DOCKER_RUN) koalaman/shellcheck --format=gcc /workspace/$${file}; done
+	@for file in `find . -type f -name "*.sh"`; do $(DOCKER_RUN) koalaman/shellcheck --format=gcc /workspace/$${file}; done
 
 build:
 	docker build -t $(DOCKER_IMAGE_NAME):$(PHP_TAG) -f $(DOCKERFILE) .
@@ -25,7 +25,7 @@ publish: generate_docker_tags
 	docker push $(DOCKER_IMAGE_NAME)
 
 test:
-	$(DOCKER_RUN) -it $(DOCKER_IMAGE_NAME):$(PHP_TAG) "/workspace/$(PHP_TAG)/vendor/bin/phpunit --bootstrap ./test/bootstrap.php ./test"
+	$(DOCKER_RUN) $(DOCKER_IMAGE_NAME):$(PHP_TAG) "./$(PHP_TAG)/vendor/bin/phpunit ./test"
 
 test_all:
 	for version in $(SUPPORTED_VERSIONS); do export PHP_VERSION=$${version}; make; done
