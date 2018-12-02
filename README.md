@@ -9,6 +9,8 @@ Testing your plugin has never been easier!
 docker run --rm -v `pwd`:/workspace nateinaction/wordpress-integration ./vendor/bin/phpunit ./test-dir
 ```
 
+Available on [Docker Hub](https://hub.docker.com/r/nateinaction/wordpress-integration/)
+
 ### What this image provides
 
 - WordPress (located at /wordpress/src)
