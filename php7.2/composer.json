@@ -14,7 +14,21 @@
             "php": "7.2"
         }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "wordpress/wordpress",
+                "version": "4.9.8",
+                "dist": {
+                    "url": "https://github.com/WordPress/wordpress-develop/archive/4.9.8.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "require": {
-        "phpunit/phpunit": "^6.5"
+        "phpunit/phpunit": "^6.5",
+        "wordpress/wordpress": "4.9.8"
     }
 }
