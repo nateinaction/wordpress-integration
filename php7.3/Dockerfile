@@ -4,23 +4,23 @@ FROM php:7.3-rc
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
     mysql-client \
     mysql-server \
-    subversion \
-    ;
+    && rm -rf /var/lib/apt/lists/*
 
 # Install mysqli
 RUN docker-php-ext-install mysqli
 
+# Install test harness
+COPY php7.3/vendor/wordpress/wordpress/ /wordpress/
+
 # Env vars
-ENV WORDPRESS_VERSION 4.9.8
 ENV WORDPRESS_DB_NAME wordpress
 ENV WORDPRESS_DB_USER wordpress
 ENV WORDPRESS_DB_PASS password
 ENV WORDPRESS_DB_HOST 127.0.0.1
-ENV WORDPRESS_SVN_DIR /wordpress
 
-# Install test harness
-COPY ./bin/install-test-harness.sh /usr/local/bin/
-RUN install-test-harness.sh
+# Configure test harness
+COPY ./bin/configure-test-harness.sh /usr/local/bin/
+RUN configure-test-harness.sh
 
 # Setup entrypoint
 COPY ./bin/entrypoint.sh /usr/local/bin/
