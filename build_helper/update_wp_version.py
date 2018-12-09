@@ -1,0 +1,54 @@
+import json
+import os
+import re
+import sys
+from collections import OrderedDict
+
+
+def update_makefile(new_version, makefile_filename):
+    """ Set WordPress version in Makefile to the specified version"""
+    print('Setting WordPress version in {} to {}'.format(makefile_filename, new_version))
+
+    with open(makefile_filename, 'r') as f:
+        contents = f.readlines()
+
+    for line_num, line in enumerate(contents):
+        wp_version_match = re.match(r'^WORDPRESS_VERSION := (?P<version>\d+)', line)
+        if wp_version_match:
+            contents[line_num] = 'WORDPRESS_VERSION := {}\n'.format(new_version)
+
+    with open(makefile_filename, 'w') as f:
+        f.writelines(contents)
+
+
+def update_composer_json(new_version, composer_filename):
+    """ Set WordPress version in composer.json to the specified version"""
+    print('Setting WordPress dependency in {} to version {}'.format(composer_filename, new_version))
+    github_release_url = 'https://github.com/WordPress/wordpress-develop/archive/{}.zip'.format(new_version)
+
+    with open(composer_filename, 'r') as composer_file:
+        composer_json = json.load(composer_file, object_pairs_hook=OrderedDict)
+
+    for dependency in composer_json['repositories']:
+        if dependency.get('package').get('name') == 'wordpress/wordpress':
+            dependency['package']['version'] = new_version
+            dependency['package']['dist']['url'] = github_release_url
+
+    composer_json['require']['wordpress/wordpress'] = new_version
+
+    with open(composer_filename, "w") as composer_file:
+        json.dump(composer_json, composer_file, indent=4, separators=(',', ': '))
+        composer_file.write("\n")
+
+
+if __name__ == '__main__':
+    version = sys.argv[1]
+    filename = os.path.abspath(sys.argv[2])
+    is_makefile = re.match(r'Makefile$', filename)
+    if re.match(r'.*/Makefile$', filename):
+        update_makefile(version, filename)
+    elif re.match(r'.*/composer\.json$', filename):
+        update_composer_json(version, filename)
+    else:
+        print('unrecognized file type', filename)
+        exit(1)

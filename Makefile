@@ -10,6 +10,7 @@ DOCKER_RUN := docker run --rm -v `pwd`:/workspace
 WP_TEST_IMAGE := nateinaction/wordpress-integration
 COMPOSER_IMAGE := -v ~/.composer/cache/:/tmp/cache composer
 COMPOSER_DIR := -d "/workspace/$(PHP_TAG)"
+PYTHON_IMAGE := python:alpine
 
 all: lint_bash composer_install build_image test
 
@@ -25,9 +26,6 @@ composer_install:
 composer_update:
 	$(DOCKER_RUN) $(COMPOSER_IMAGE) composer update $(COMPOSER_DIR)
 
-composer_update_all:
-	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make composer_update; done
-
 build_image:
 	docker build -t $(WP_TEST_IMAGE):$(PHP_TAG) -f $(DOCKERFILE) .
 
@@ -36,6 +34,12 @@ test:
 
 test_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make; done
+
+update_wp_version:
+	$(DOCKER_RUN) $(PYTHON_IMAGE) python /workspace/build_helper/update_wp_version.py $(WORDPRESS_VERSION) /workspace/$(PHP_TAG)/composer.json
+
+update_wp_version_all:
+	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version composer_update; done
 
 publish: generate_docker_tags
 	docker push $(WP_TEST_IMAGE)
