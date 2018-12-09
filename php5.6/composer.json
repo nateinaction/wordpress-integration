@@ -28,7 +28,7 @@
         }
     ],
     "require": {
-    	"phpunit/phpunit": "^5",
+        "phpunit/phpunit": "^5",
         "wordpress/wordpress": "5.0.0"
     }
 }

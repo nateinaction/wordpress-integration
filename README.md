@@ -71,7 +71,12 @@ require $wordpress_tests . '/bootstrap.php';
 ### Example of plugins using this image
 
 - [Segment Cache for WP Engine](https://github.com/nateinaction/segment-cache-for-wp-engine)
+- [WP Engine GeoTarget](https://github.com/wpengine/geoip)
 
 ### Contributing
 
 The goal is to keep this image a small but helpful testing companion. If you feel like it's missing something please post a PR or open a new issue!
+
+#### Updating WordPress
+
+When a new version of WordPress launches, just update the `WORDPRESS_VERSION` in the Makefile and run `make update_wp_version_all` from the repository root. Then submit a PR with the changes.
