@@ -3,15 +3,19 @@ services: docker
 notifications:
   email: false
 
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+  - ${HOME}/.composer/cache
+
 env:
   - PHP_VERSION=7.3
   - PHP_VERSION=7.2
   - PHP_VERSION=7.1
   - PHP_VERSION=5.6
-
-cache:
-  directories:
-    - ${HOME}/.composer/cache
 
 script:
   - make
