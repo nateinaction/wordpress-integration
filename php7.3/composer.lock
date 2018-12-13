@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1084e6232966316b992f11c575932d4f",
+    "content-hash": "8dae05fc138f3031550a05dce905ac4d",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -1468,10 +1468,10 @@
         },
         {
             "name": "wordpress/wordpress",
-            "version": "5.0.0",
+            "version": "5.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/WordPress/wordpress-develop/archive/5.0.0.zip",
+                "url": "https://github.com/WordPress/wordpress-develop/archive/5.0.1.zip",
                 "reference": null,
                 "shasum": null
             },

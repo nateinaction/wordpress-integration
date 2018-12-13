@@ -19,9 +19,9 @@
             "type": "package",
             "package": {
                 "name": "wordpress/wordpress",
-                "version": "5.0.0",
+                "version": "5.0.1",
                 "dist": {
-                    "url": "https://github.com/WordPress/wordpress-develop/archive/5.0.0.zip",
+                    "url": "https://github.com/WordPress/wordpress-develop/archive/5.0.1.zip",
                     "type": "zip"
                 }
             }
@@ -29,6 +29,6 @@
     ],
     "require": {
         "phpunit/phpunit": "^6.5",
-        "wordpress/wordpress": "5.0.0"
+        "wordpress/wordpress": "5.0.1"
     }
 }
