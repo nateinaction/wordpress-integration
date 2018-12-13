@@ -46,3 +46,13 @@ publish: generate_docker_tags
 
 generate_docker_tags:
 	./build_helper/generate_docker_tags.sh $(WP_TEST_IMAGE) $(WORDPRESS_VERSION) $(PHP_VERSION) $(PHP_LATEST) $(PHP_TAG)
+
+generate_docker_readme_partial:
+	./build_helper/generate_docker_readme.sh $(WP_TEST_IMAGE) $(WORDPRESS_VERSION) $(PHP_VERSION) $(PHP_LATEST) $(PHP_TAG)
+
+generate_docker_readme:
+	rm DOCKER_README.md
+	echo "# Supported tags and respective `Dockerfile` links" >> DOCKER_README.md
+	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make generate_docker_readme_partial; done
+	printf "\n" >> DOCKER_README.md
+	cat README.md >> DOCKER_README.md
