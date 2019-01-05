@@ -1,9 +1,9 @@
 .PHONY: test
 
-WORDPRESS_VERSION := 5.0.1
+WORDPRESS_VERSION := 5.0.2
 PHP_VERSION ?= 7.2
 PHP_LATEST := 7.2
-SUPPORTED_VERSIONS := 7.3 7.2 7.1 5.6
+SUPPORTED_VERSIONS := 7.3 7.2 7.1
 PHP_TAG := php$(PHP_VERSION)
 DOCKERFILE := $(PHP_TAG)/Dockerfile
 DOCKER_RUN := docker run --rm -v `pwd`:/workspace
@@ -36,10 +36,10 @@ test_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make; done
 
 update_wp_version:
-	$(DOCKER_RUN) $(PYTHON_IMAGE) python /workspace/build_helper/update_wp_version.py $(WORDPRESS_VERSION) /workspace/$(PHP_TAG)/composer.json
+	$(DOCKER_RUN) $(PYTHON_IMAGE) python /workspace/build_helper/update_wp_version.py $(WORDPRESS_VERSION) /workspace/$(PHP_TAG)/Dockerfile
 
 update_wp_version_all:
-	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version composer_update; done
+	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version; done
 
 publish: generate_docker_tags
 	docker push $(WP_TEST_IMAGE)

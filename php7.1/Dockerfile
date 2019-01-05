@@ -13,7 +13,9 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN docker-php-ext-install mysqli
 
 # Install test harness
-COPY php7.1/vendor/wordpress/wordpress/ /wordpress/
+RUN curl "https://codeload.github.com/WordPress/wordpress-develop/zip/5.0.2" -o "/wordpress.zip"; \
+    mkdir /wordpress; \
+    tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1
 
 # Env vars
 ENV WORDPRESS_DB_NAME wordpress
