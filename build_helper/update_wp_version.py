@@ -21,24 +21,22 @@ def update_makefile(new_version, makefile_filename):
         f.writelines(contents)
 
 
-def update_composer_json(new_version, composer_filename):
+def update_dockerfile(new_version, dockerfile_filename):
     """ Set WordPress version in composer.json to the specified version"""
-    print('Setting WordPress dependency in {} to version {}'.format(composer_filename, new_version))
-    github_release_url = 'https://github.com/WordPress/wordpress-develop/archive/{}.zip'.format(new_version)
+    print('Setting WordPress dependency in {} to version {}'.format(dockerfile_filename, new_version))
+    github_release_url = 'https://codeload.github.com/WordPress/wordpress-develop/tar.gz/{}'.format(new_version)
+    curl = 'RUN curl "{}" -o "/wordpress.tar.gz"; \\\n'.format(github_release_url)
 
-    with open(composer_filename, 'r') as composer_file:
-        composer_json = json.load(composer_file, object_pairs_hook=OrderedDict)
+    with open(dockerfile_filename, 'r') as f:
+        contents = f.readlines()
 
-    for dependency in composer_json['repositories']:
-        if dependency.get('package').get('name') == 'wordpress/wordpress':
-            dependency['package']['version'] = new_version
-            dependency['package']['dist']['url'] = github_release_url
+    for line_num, line in enumerate(contents):
+        curl_match = re.match(r'^RUN curl "https://codeload.github.com', line)
+        if curl_match:
+            contents[line_num] = curl
 
-    composer_json['require']['wordpress/wordpress'] = new_version
-
-    with open(composer_filename, "w") as composer_file:
-        json.dump(composer_json, composer_file, indent=4, separators=(',', ': '))
-        composer_file.write("\n")
+    with open(dockerfile_filename, 'w') as f:
+        f.writelines(contents)
 
 
 if __name__ == '__main__':
@@ -47,8 +45,8 @@ if __name__ == '__main__':
     is_makefile = re.match(r'Makefile$', filename)
     if re.match(r'.*/Makefile$', filename):
         update_makefile(version, filename)
-    elif re.match(r'.*/composer\.json$', filename):
-        update_composer_json(version, filename)
+    elif re.match(r'.*/Dockerfile$', filename):
+        update_dockerfile(version, filename)
     else:
         print('unrecognized file type', filename)
         exit(1)
