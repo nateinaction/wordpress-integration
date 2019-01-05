@@ -26,6 +26,9 @@ composer_install:
 composer_update:
 	$(DOCKER_RUN) $(COMPOSER_IMAGE) composer update $(COMPOSER_DIR)
 
+composer_update_all:
+	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make composer_update; done
+
 build_image:
 	docker build -t $(WP_TEST_IMAGE):$(PHP_TAG) -f $(DOCKERFILE) .
 
