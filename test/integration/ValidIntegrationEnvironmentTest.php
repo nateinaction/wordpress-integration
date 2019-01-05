@@ -28,11 +28,6 @@ class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	 * Extensions installed: xdebug
 	 */
 	public function test_php_extensions_installed() {
-		if (phpversion() >= 7.3) {
-            $this->markTestSkipped(
-              'The xdebug extension is not yet available on 7.3.'
-            );
-        }
 		$xdebug_installed = function_exists('xdebug_break');
 		$this->assertTrue($xdebug_installed);
 	}
