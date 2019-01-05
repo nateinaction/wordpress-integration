@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
     mysql-server \
     && rm -rf /var/lib/apt/lists/*
 
+# Install and enable xdebug
+RUN pecl install xdebug-2.7.0beta1 && docker-php-ext-enable xdebug
+
 # Install mysqli
 RUN docker-php-ext-install mysqli
 
