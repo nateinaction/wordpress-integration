@@ -12,7 +12,7 @@ COMPOSER_IMAGE := -v ~/.composer/cache/:/tmp/cache composer
 COMPOSER_DIR := -d "/workspace/$(PHP_TAG)"
 PYTHON_IMAGE := python:alpine
 
-all: lint_bash composer_install build_image test
+all: lint_bash build_image composer_install test
 
 shell:
 	$(DOCKER_RUN) -it $(WP_TEST_IMAGE) "/bin/bash"
