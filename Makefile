@@ -39,7 +39,7 @@ test_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make; done
 
 update_wp_version:
-	$(DOCKER_RUN) $(PYTHON_IMAGE) python /workspace/build_helper/update_wp_version.py $(WORDPRESS_VERSION) /workspace/$(PHP_TAG)/Dockerfile
+	build_helper/update_wp_version.py $(WORDPRESS_VERSION) $(PHP_TAG)/Dockerfile
 
 update_wp_version_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version; done
