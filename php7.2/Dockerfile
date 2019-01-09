@@ -13,7 +13,7 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN docker-php-ext-install mysqli
 
 # Install test harness
-RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.0.2" -o "/wordpress.tar.gz"; \
+RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.0.3" -o "/wordpress.tar.gz"; \
     mkdir /wordpress; \
     tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1
 
