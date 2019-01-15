@@ -24,5 +24,5 @@ for DOCKER_TAG in "${TAGS[@]}"; do
 	printf "\`${DOCKER_TAG}\` " >> README.md
 done
 printf "\`${PHP_TAG}\` " >> README.md
-printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n" >> README.md
+printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n\n" >> README.md
 

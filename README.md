@@ -1,26 +1,31 @@
 # Supported tags and respective  links
 `5.0.3-php7.3` `5.0-php7.3` `php7.3` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
+
 `5.0.3-php7.2` `5.0-php7.2` `latest` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
+
 `5.0.3-php7.1` `5.0-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
 
+
 # WordPress Integration Docker Image
-[![Build Status](https://travis-ci.org/nateinaction/wordpress-integration.svg?branch=master)](https://travis-ci.org/nateinaction/wordpress-integration)
+[![Build Status](https://travis-ci.org/worldpeaceio/wordpress-integration.svg?branch=develop)](https://travis-ci.org/worldpeaceio/wordpress-integration)
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
 
 Testing your plugin has never been easier!
 
 ```bash
-docker run --rm -v `pwd`:/workspace nateinaction/wordpress-integration ./vendor/bin/phpunit ./test-dir
+docker run --rm -v `pwd`:/workspace worldpeaceio/wordpress-integration ./vendor/bin/phpunit ./test-dir
 ```
 
-Available on [Docker Hub](https://hub.docker.com/r/nateinaction/wordpress-integration/)
+Available on [Docker Hub](https://hub.docker.com/r/worldpeaceio/wordpress-integration/)
+
+*This image is kept automatically up-to-date with WordPress upstream via [wordpress-integration-updater](https://github.com/worldpeaceio/wordpress-integration-updater).*
 
 ### What this image provides
 
 - WordPress (located at /wordpress/src)
 - WordPress Testcase, Mocks and Factories (located at /wordpress/tests/phpunit/includes/)
-- xdebug
+- Xdebug
 
 ### What this image does NOT provide
 
