@@ -1,4 +1,4 @@
-FROM php:7.2
+FROM php:7.1
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \

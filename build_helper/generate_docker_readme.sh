@@ -21,8 +21,8 @@ if [[ "${PHP_LATEST}" == "${PHP_VERSION}" ]]; then
 fi
 
 for DOCKER_TAG in "${TAGS[@]}"; do
-	printf "\`${DOCKER_TAG}\` " >> DOCKER_README.md
+	printf "\`${DOCKER_TAG}\` " >> README.md
 done
-printf "\`${PHP_TAG}\` " >> DOCKER_README.md
-printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n" >> DOCKER_README.md
+printf "\`${PHP_TAG}\` " >> README.md
+printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n" >> README.md
 

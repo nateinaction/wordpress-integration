@@ -1,8 +1,3 @@
-# Supported tags and respective  links
-`5.0.3-php7.3` `5.0-php7.3` `php7.3` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
-`5.0.3-php7.2` `5.0-php7.2` `latest` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
-`5.0.3-php7.1` `5.0-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
-
 # WordPress Integration Docker Image
 [![Build Status](https://travis-ci.org/nateinaction/wordpress-integration.svg?branch=master)](https://travis-ci.org/nateinaction/wordpress-integration)
 
