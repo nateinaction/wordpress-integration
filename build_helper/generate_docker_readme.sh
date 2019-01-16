@@ -16,13 +16,13 @@ PATCH=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\3/")
 # Add tags to array, PHP_TAG is added to the image during build
 TAGS+=("${MAJOR}.${MINOR}.${PATCH}-${PHP_TAG}")
 TAGS+=("${MAJOR}.${MINOR}-${PHP_TAG}")
-if [[ "${PHP_LATEST}" == "${PHP_VERSION}" ]]; then
-	TAGS+=("latest")
-fi
 
 for DOCKER_TAG in "${TAGS[@]}"; do
 	printf "\`${DOCKER_TAG}\` " >> README.md
 done
 printf "\`${PHP_TAG}\` " >> README.md
+if [[ "${PHP_LATEST}" == "${PHP_VERSION}" ]]; then
+	printf "\`latest\` " >> README.md
+fi
 printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n\n" >> README.md
 
