@@ -47,6 +47,12 @@ update_wp_version_dockerfile:
 update_wp_version_dockerfile_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version_dockerfile; done
 
+generate_docker_tags:
+	./build_helper/generate_docker_tags.sh $(WP_TEST_IMAGE) $(WORDPRESS_VERSION) $(PHP_TAG)
+
+publish: generate_docker_tags
+	docker push $(WP_TEST_IMAGE)
+
 generate_docker_readme_partial:
 	./build_helper/generate_docker_readme.sh $(WP_TEST_IMAGE) $(WORDPRESS_VERSION) $(PHP_VERSION) $(PHP_LATEST) $(PHP_TAG)
 
