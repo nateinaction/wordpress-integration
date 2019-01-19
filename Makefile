@@ -30,7 +30,12 @@ composer_update_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make composer_update; done
 
 build_image:
+	# Default tag will be php7.2
 	docker build -t $(WP_TEST_IMAGE):$(PHP_TAG) -f $(DOCKERFILE) .
+	# WP major minor patch tag e.g. 5.0.3-php7.2
+	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(WORDPRESS_VERSION)-$(PHP_TAG)
+	# WP major minor tag e.g. 5.0-php7.2
+	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(shell make get_wp_version_makefile_major_minor_only)-$(PHP_TAG)
 
 test:
 	$(DOCKER_RUN) $(WP_TEST_IMAGE):$(PHP_TAG) "./$(PHP_TAG)/vendor/bin/phpunit ./test"
@@ -41,16 +46,16 @@ test_all:
 get_wp_version_makefile:
 	@echo $(WORDPRESS_VERSION)
 
+get_wp_version_makefile_major_minor_only:
+	@echo $(WORDPRESS_VERSION) | sed s/\..$$//
+
 update_wp_version_dockerfile:
 	build_helper/update_wp_version_dockerfile.py $(WORDPRESS_VERSION) $(PHP_TAG)/Dockerfile
 
 update_wp_version_dockerfile_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make update_wp_version_dockerfile; done
 
-generate_docker_tags:
-	./build_helper/generate_docker_tags.sh $(WP_TEST_IMAGE) $(WORDPRESS_VERSION) $(PHP_TAG)
-
-publish: generate_docker_tags
+publish:
 	docker push $(WP_TEST_IMAGE)
 
 generate_docker_readme_partial:
@@ -58,7 +63,7 @@ generate_docker_readme_partial:
 
 generate_readme: generate_docker_readme_partial
 	rm -rf README.md
-	echo "# Supported tags and respective `Dockerfile` links" >> README.md
+	echo "# Supported tags and respective `Dockerfile` links" > README.md
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make generate_docker_readme_partial; done
 	printf "\n" >> README.md
 	cat build_helper/README.partial.md >> README.md
