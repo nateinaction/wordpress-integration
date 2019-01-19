@@ -75,10 +75,12 @@ require $wordpress_tests . '/bootstrap.php';
 - [Segment Cache for WP Engine](https://github.com/nateinaction/segment-cache-for-wp-engine)
 - [WP Engine GeoTarget](https://github.com/wpengine/geoip)
 
-### Contributing
+### Contributing and maintaining this image
 
-The goal is to keep this image a small but helpful testing companion. If you feel like it's missing something please post a PR or open a new issue!
+If you feel like this image is missing something please post a PR or open a new issue!
 
 #### Updating WordPress
 
-When a new version of WordPress launches, just update the `WORDPRESS_VERSION` in the Makefile and run `make update_wp_version_all` from the repository root. Then submit a PR with the changes.
+This image is automatically kept up-to-date with WordPress core by the [wordpress-integreation-services](https://github.com/worldpeaceio/wordpress-integration-services) project.
+
+If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image` from the repository root.
