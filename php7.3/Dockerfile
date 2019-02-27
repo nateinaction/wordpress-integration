@@ -1,4 +1,4 @@
-FROM php:7.3
+FROM wordpress:php7.3
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
@@ -7,15 +7,12 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
     && rm -rf /var/lib/apt/lists/*
 
 # Install and enable xdebug
-RUN pecl install xdebug-2.7.0beta1 && docker-php-ext-enable xdebug
-
-# Install mysqli
-RUN docker-php-ext-install mysqli
+RUN pecl install xdebug-2.7.0RC2 && docker-php-ext-enable xdebug
 
 # Install test harness
-RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.1" -o "/wordpress.tar.gz"; \
-    mkdir /wordpress; \
-    tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1
+RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.1" -o "/wordpress.tar.gz" \
+    && mkdir /wordpress \
+    && tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1
 
 # Env vars
 ENV WORDPRESS_DB_NAME wordpress
