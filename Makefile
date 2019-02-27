@@ -1,6 +1,6 @@
 .PHONY: test
 
-WORDPRESS_VERSION := 5.0.3
+WORDPRESS_VERSION := 5.1
 PHP_VERSION ?= 7.2
 PHP_LATEST := 7.2
 SUPPORTED_VERSIONS := 7.3 7.2 7.1
@@ -30,11 +30,11 @@ composer_update_all:
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make composer_update; done
 
 build_image:
-	# Default tag will be php7.2
+	@# Default tag will be php7.2
 	docker build -t $(WP_TEST_IMAGE):$(PHP_TAG) -f $(DOCKERFILE) .
-	# WP major minor patch tag e.g. 5.0.3-php7.2
+	@# WP major minor patch tag e.g. 5.0.3-php7.2
 	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(WORDPRESS_VERSION)-$(PHP_TAG)
-	# WP major minor tag e.g. 5.0-php7.2
+	@# WP major minor tag e.g. 5.0-php7.2
 	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(shell make get_wp_version_makefile_major_minor_only)-$(PHP_TAG)
 
 test:
