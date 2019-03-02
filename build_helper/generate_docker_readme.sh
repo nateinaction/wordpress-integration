@@ -8,6 +8,7 @@ PHP_LATEST=${4}
 PHP_TAG=${5}
 
 # Attribute: https://github.com/cloudflare/semver_bash/blob/master/semver.sh
+# WordPress doesn't use semver for new major releases so patch version is optional
 RE='[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)'
 MAJOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\1/")
 MINOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\2/")

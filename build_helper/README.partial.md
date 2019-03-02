@@ -83,4 +83,4 @@ If you feel like this image is missing something please post a PR or open a new 
 
 This image is automatically kept up-to-date with WordPress core by the [wordpress-integreation-services](https://github.com/worldpeaceio/wordpress-integration-services) project.
 
-If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image` from the repository root.
+If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image generate_readme` from the repository root.

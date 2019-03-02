@@ -1,9 +1,9 @@
 # Supported tags and respective  links
-`5.0.3-php7.3` `5.0-php7.3` `php7.3` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
+`5.1-php7.3` `5.1-php7.3` `php7.3` `latest` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
 
-`5.0.3-php7.2` `5.0-php7.2` `php7.2` `latest` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
+`5.1-php7.2` `5.1-php7.2` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
 
-`5.0.3-php7.1` `5.0-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
+`5.1-php7.1` `5.1-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
 
 
 # WordPress Integration Docker Image
@@ -91,4 +91,4 @@ If you feel like this image is missing something please post a PR or open a new 
 
 This image is automatically kept up-to-date with WordPress core by the [wordpress-integreation-services](https://github.com/worldpeaceio/wordpress-integration-services) project.
 
-If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image` from the repository root.
+If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image generate_readme` from the repository root.
