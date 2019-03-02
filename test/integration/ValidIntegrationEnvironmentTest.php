@@ -2,16 +2,12 @@
 /**
  * Unit tests determines if WordPress core functions exist
  *
- * @package wordpress-integration-docker
+ * @package worldpeaceio/wordpress-integration
  */
 
 /**
  * This unit tests validates that WP test enviroment exists with WP_UnitTestCase class
  * Then it verifies that WP exists with wp_kses
- *
- * Backup globals must be disabled, otherwise it will cause “mysqli_query(): Couldn’t fetch mysqli” on PHP 5.6
- * https://wordpress.org/support/topic/wp_unittestcaseteardown-causes-mysqli_query-couldnt-fetch-mysqli/
- * @backupGlobals disabled
  */
 class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	/**

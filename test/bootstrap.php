@@ -2,7 +2,7 @@
 /**
  * Test bootstrap
  *
- * @package nateinaction/wordpress-integration
+ * @package worldpeaceio/wordpress-integration
  */
 
 $wordpress_tests = '/wordpress/tests/phpunit/includes';
