@@ -49,6 +49,11 @@ get_wp_version_makefile:
 get_wp_version_makefile_major_minor_only:
 	@echo $(WORDPRESS_VERSION) | sed s/\..$$//
 
+update_wp_version_makefile:
+ifdef version
+	build_helper/update_wp_version_makefile.py $(version)
+endif
+
 update_wp_version_dockerfile:
 	build_helper/update_wp_version_dockerfile.py $(WORDPRESS_VERSION) $(PHP_TAG)/Dockerfile
 
