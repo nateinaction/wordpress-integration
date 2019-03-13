@@ -68,7 +68,7 @@ generate_docker_readme_partial:
 
 generate_readme: generate_docker_readme_partial
 	rm -rf README.md
-	echo "# Supported tags and respective `Dockerfile` links" > README.md
+	echo "# Supported tags and respective \`Dockerfile\` links" > README.md
 	set -e; for version in $(SUPPORTED_VERSIONS); do PHP_VERSION=$${version} make generate_docker_readme_partial; done
 	printf "\n" >> README.md
 	cat build_helper/README.partial.md >> README.md
