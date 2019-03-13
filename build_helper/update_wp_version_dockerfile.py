@@ -9,7 +9,7 @@ def update_dockerfile(new_version, dockerfile_filename):
     """ Set WordPress version in Dockerfile to the specified version"""
     print('Setting WordPress dependency in {} to version {}'.format(dockerfile_filename, new_version))
     github_release_url = 'https://codeload.github.com/WordPress/wordpress-develop/tar.gz/{}'.format(new_version)
-    curl = 'RUN curl "{}" -o "/wordpress.tar.gz"; \\\n'.format(github_release_url)
+    curl = 'RUN curl "{}" -o "/wordpress.tar.gz" \\\n'.format(github_release_url)
 
     with open(dockerfile_filename, 'r') as f:
         contents = f.readlines()
