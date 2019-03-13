@@ -9,10 +9,19 @@ PHP_TAG=${5}
 
 # Attribute: https://github.com/cloudflare/semver_bash/blob/master/semver.sh
 # WordPress doesn't use semver for new major releases so patch version is optional
-RE='[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)'
-MAJOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\1/")
-MINOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\2/")
-PATCH=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\3/")
+VERSION_DOTS="${WORDPRESS_VERSION//[^\.]}"
+if [ "${#VERSION_DOTS}" -eq 1 ]
+then
+	RE='\([0-9]*\)[.]\([0-9]*\)'
+	MAJOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\1/")
+	MINOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\2/")
+	PATCH='0'
+else
+	RE='\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)'
+	MAJOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\1/")
+	MINOR=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\2/")
+	PATCH=$(echo "${WORDPRESS_VERSION}" | sed -e "s/${RE}/\3/")
+fi
 
 # Add tags to array, PHP_TAG is added to the image during build
 TAGS+=("${MAJOR}.${MINOR}.${PATCH}-${PHP_TAG}")
