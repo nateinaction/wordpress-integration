@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
     && rm -rf /var/lib/apt/lists/*
 
 # Install and enable xdebug
-RUN pecl install xdebug-2.7.0RC2 && docker-php-ext-enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Install test harness
 RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.1.1" -o "/wordpress.tar.gz" \
