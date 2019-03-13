@@ -1,13 +1,13 @@
-# Supported tags and respective  links
-`5.1.0-php7.3` `5.1-php7.3` `php7.3` `latest` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
+# Supported tags and respective `Dockerfile` links
+`5.1.1-php7.3` `5.1-php7.3` `php7.3` `latest` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
 
-`5.1.0-php7.2` `5.1-php7.2` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
+`5.1.1-php7.2` `5.1-php7.2` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
 
-`5.1.0-php7.1` `5.1-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
+`5.1.1-php7.1` `5.1-php7.1` `php7.1` ([php7.1/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.1/Dockerfile))
 
 
 # WordPress Integration Docker Image
-[![Build Status](https://travis-ci.org/worldpeaceio/wordpress-integration.svg?branch=master)](https://travis-ci.org/worldpeaceio/wordpress-integration)
+[![Build Status](https://travis-ci.org/worldpeaceio/wordpress-integration.svg?branch=master)](https://travis-ci.org/worldpeaceio/wordpress-integration) [![Docker Pulls](https://img.shields.io/docker/pulls/worldpeaceio/wordpress-integration.svg)](https://hub.docker.com/r/worldpeaceio/wordpress-integration)
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
 
