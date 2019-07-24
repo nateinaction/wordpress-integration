@@ -2,8 +2,8 @@ FROM wordpress:php7.3
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
-    mysql-client \
-    mysql-server \
+    default-mysql-client \
+    default-mysql-server \
     && rm -rf /var/lib/apt/lists/*
 
 # Install and enable xdebug
