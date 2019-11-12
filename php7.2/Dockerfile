@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Install test harness
-RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.2.4" -o "/wordpress.tar.gz" \
+RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/5.3" -o "/wordpress.tar.gz" \
     && mkdir /wordpress \
     && tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1
 
