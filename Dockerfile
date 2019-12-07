@@ -1,4 +1,5 @@
-FROM wordpress:php7.4
+ARG PHP_VERSION=7.4
+FROM wordpress:php${PHP_VERSION}
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
