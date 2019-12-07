@@ -1,4 +1,4 @@
-FROM wordpress:php7.1
+FROM wordpress:php7.4
 
 # Install apt dependencies
 RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends \
@@ -29,4 +29,3 @@ COPY ./bin/entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 WORKDIR /workspace
-

@@ -1,9 +1,9 @@
 .PHONY: test
 
 WORDPRESS_VERSION := 5.3
-PHP_VERSION ?= 7.3
-PHP_LATEST := 7.3
-SUPPORTED_VERSIONS := 7.3 7.2 7.1
+PHP_VERSION ?= 7.4
+PHP_LATEST := 7.4
+SUPPORTED_VERSIONS := 7.4 7.3 7.2
 PHP_TAG := php$(PHP_VERSION)
 DOCKERFILE := $(PHP_TAG)/Dockerfile
 DOCKER_RUN := docker run --rm -v `pwd`:/workspace
