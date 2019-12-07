@@ -11,11 +11,11 @@
  */
 class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	/**
-	 * Test inside_wordpress_environment
+	 * Test WordPress is available
 	 */
-	public function test_inside_wordpress_environment() {
-		$inside_wordpress_environment = function_exists('wp_kses');
-		$this->assertTrue($inside_wordpress_environment);
+	public function test_wordpress_available(): void {
+		$wordpress_available = function_exists('wp_kses');
+		$this->assertTrue($wordpress_available);
 	}
 
 	/**
@@ -23,7 +23,7 @@ class ValidIntegrationEnvironmentTest extends \WP_UnitTestCase {
 	 *
 	 * Extensions installed: xdebug
 	 */
-	public function test_php_extensions_installed() {
+	public function test_php_extensions_installed(): void {
 		$xdebug_installed = function_exists('xdebug_break');
 		$this->assertTrue($xdebug_installed);
 	}
