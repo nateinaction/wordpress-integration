@@ -17,6 +17,8 @@ all: composer_install lint_bash build_image test
 shell:
 	$(DOCKER_RUN) -it $(WP_TEST_IMAGE) "/bin/bash"
 
+lint: lint_bash
+
 lint_bash:
 	@for file in `find . -type f -name "*.sh"`; do $(DOCKER_RUN) koalaman/shellcheck --format=gcc /workspace/$${file}; done
 
