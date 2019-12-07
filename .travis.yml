@@ -14,15 +14,20 @@ cache:
   - ${HOME}/.composer/cache
 
 env:
+  - PHP_VERSION=7.4
   - PHP_VERSION=7.3
   - PHP_VERSION=7.2
-  - PHP_VERSION=7.1
+
+before_script:
+  - make composer_install
 
 script:
-  - make
+  - make lint
+  - make build_image
+  - make test
 
 after_success:
-  - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+  - if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
       docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
       make publish;
     fi
