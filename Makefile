@@ -5,10 +5,9 @@ PHP_VERSION ?= $(PHP_LATEST)
 SUPPORTED_PHP_VERSIONS := 7.4 7.3 7.2
 PHP_TAG := php$(PHP_VERSION)
 WORDPRESS_VERSION := 5.3.1
-DOCKER_RUN := docker run --rm -v `pwd`:/workspace
+DOCKER_RUN := docker run --rm -v `pwd`:/workspace -w /workspace
 WP_TEST_IMAGE := worldpeaceio/wordpress-integration
 COMPOSER_IMAGE := -v ~/.composer/cache/:/tmp/cache composer
-COMPOSER_DIR := -d "/workspace"
 PYTHON_IMAGE := python:alpine
 
 all: composer_install lint_bash build_image test
@@ -22,13 +21,10 @@ lint_bash:
 	@for file in `find . -type f -name "*.sh"`; do $(DOCKER_RUN) koalaman/shellcheck --format=gcc /workspace/$${file}; done
 
 composer_install:
-	$(DOCKER_RUN) $(COMPOSER_IMAGE) install $(COMPOSER_DIR)
+	$(DOCKER_RUN) $(COMPOSER_IMAGE) install
 
 composer_update:
-	$(DOCKER_RUN) $(COMPOSER_IMAGE) composer update $(COMPOSER_DIR)
-
-composer_update_all:
-	set -e; for version in $(SUPPORTED_PHP_VERSIONS); do PHP_VERSION=$${version} make composer_update; done
+	$(DOCKER_RUN) $(COMPOSER_IMAGE) composer update
 
 build_image:
 	@# Default tag will be php7.2
@@ -38,11 +34,16 @@ build_image:
 	@# WP major minor tag e.g. 5.0-php7.2
 	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(shell make get_wp_version_makefile_major_minor_only)-$(PHP_TAG)
 
-test:
+test: test_image test_helpers
+
+test_image:
 	$(DOCKER_RUN) $(WP_TEST_IMAGE):$(PHP_TAG) "./vendor/bin/phpunit ./test"
 
-test_all:
-	set -e; for version in $(SUPPORTED_PHP_VERSIONS); do PHP_VERSION=$${version} make; done
+test_helpers:
+	$(DOCKER_RUN) $(PYTHON_IMAGE) python -m unittest test/build_helper/test_update_wp_version.py
+
+test_all_images:
+	set -e; for version in $(SUPPORTED_PHP_VERSIONS); do PHP_VERSION=$${version} make build_image test_image; done
 
 get_wp_version_makefile:
 	@echo $(WORDPRESS_VERSION)
@@ -52,14 +53,11 @@ get_wp_version_makefile_major_minor_only:
 
 update_wp_version_makefile:
 ifdef version
-	build_helper/update_wp_version_makefile.py $(version)
+	build_helper/update_wp_version.py $(version) Makefile
 endif
 
 update_wp_version_dockerfile:
-	build_helper/update_wp_version_dockerfile.py $(WORDPRESS_VERSION)  Dockerfile
-
-update_wp_version_dockerfile_all:
-	set -e; for version in $(SUPPORTED_PHP_VERSIONS); do PHP_VERSION=$${version} make update_wp_version_dockerfile; done
+	build_helper/update_wp_version.py $(WORDPRESS_VERSION) Dockerfile
 
 publish:
 	docker push $(WP_TEST_IMAGE)
