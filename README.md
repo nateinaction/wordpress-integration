@@ -1,9 +1,9 @@
 # Supported tags and respective `Dockerfile` links
-`5.3.1-php7.4` `5.3-php7.4` `php7.4` `latest` ([php7.4/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.4/Dockerfile))
+`5.3.2-php7.4` `5.3-php7.4` `php7.4` `latest` ([php7.4/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.4/Dockerfile))
 
-`5.3.1-php7.3` `5.3-php7.3` `php7.3` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
+`5.3.2-php7.3` `5.3-php7.3` `php7.3` ([php7.3/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.3/Dockerfile))
 
-`5.3.1-php7.2` `5.3-php7.2` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
+`5.3.2-php7.2` `5.3-php7.2` `php7.2` ([php7.2/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/php7.2/Dockerfile))
 
 
 # WordPress Integration Docker Image
