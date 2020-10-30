@@ -1,11 +1,11 @@
 ---
 name: Deploy
-on:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: "0 0 * * *" # daily
+#on:
+#  push:
+#    branches:
+#      - master
+#  schedule:
+#    - cron: "0 0 * * *" # daily
 
 jobs:
   deploy:
