@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Check version, commit, and build
+      - name: Check version, commit, build and push to docker hub
         run: |
           mkdir -p build
           # Check lastest WP version on wordpress.org
@@ -22,18 +22,14 @@ jobs:
             git config --local user.name "GitHub Action"
             git commit -m "Update WordPress to $(cat wordpress_version.txt)" -a
             make clean build -j 10
+            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_TOKEN};
+            docker push ${GITHUB_REPOSITORY};
           fi
-      - name: Deploy to Docker Hub
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_TOKEN};
-          docker push ${GITHUB_REPOSITORY};
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push changes to master
         uses: ad-m/github-push-action@master
-        if: github.ref == 'refs/heads/master'
         with:
           # Using a repo's default token will not trigger the ci action
           # https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
