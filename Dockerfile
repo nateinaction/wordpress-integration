@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Install test harness
-ARG WORDPRESS_VERSION=5.5.1
+ARG WORDPRESS_VERSION=5.5.2
 RUN curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/${WORDPRESS_VERSION}" -o "/wordpress.tar.gz" \
     && mkdir /wordpress \
     && tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1 \
