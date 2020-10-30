@@ -15,10 +15,8 @@ jobs:
           mkdir -p build
           # Check lastest WP version on wordpress.org
           curl -s "https://api.wordpress.org/core/version-check/1.7/" | jq -r '.offers[0].current' > build/wordpress_version.txt
-          # Compair latest with repo version
-          diff build/wordpress_version.txt wordpress_version.txt
-          # If they're different, commit the changes
-          if [ $? = 1 ]; then;
+          # Compare latest with repo version, if they're different, commit the changes
+          if ! diff build/wordpress_version.txt wordpress_version.txt; then
             mv build/wordpress_version.txt wordpress_version.txt
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
