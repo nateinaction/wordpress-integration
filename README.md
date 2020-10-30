@@ -1,4 +1,5 @@
 # Supported tags and respective `Dockerfile` links
+5.5.2
 [`php7.4`, `php7.4-wp5.5.2`, `php7.4-wp5.5`, `latest`](https://github.com/nateinaction/wordpress-integration/blob/master/Dockerfile)
 
 [`php7.3`, `php7.3-wp5.5.2`, `php7.3-wp5.5`](https://github.com/nateinaction/wordpress-integration/blob/master/Dockerfile)

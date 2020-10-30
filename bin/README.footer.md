@@ -1,7 +1,7 @@
 # WordPress Integration Docker Image
 [![GitHub Super-Linter](https://github.com/worldpeaceio/wordpress-integration/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Build Status](https://travis-ci.com/worldpeaceio/wordpress-integration.svg?branch=develop)](https://travis-ci.com/worldpeaceio/wordpress-integration)
-[![Docker Pulls](https://img.shields.io/docker/pulls/worldpeaceio/wordpress-integration.svg)](https://hub.docker.com/r/worldpeaceio/wordpress-integration)
+[![Dockerhub Pulls](https://img.shields.io/docker/pulls/worldpeaceio/wordpress-integration.svg)](https://hub.docker.com/r/worldpeaceio/wordpress-integration)
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
 
@@ -10,8 +10,6 @@ Testing your plugin has never been easier!
 ```bash
 docker run --rm -v `pwd`:/workspace worldpeaceio/wordpress-integration ./vendor/bin/phpunit ./test-dir
 ```
-
-Available on [Docker Hub](https://hub.docker.com/r/worldpeaceio/wordpress-integration/)
 
 ### Supported versions:
 - [PHP](https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/)
@@ -85,6 +83,4 @@ If you feel like this image is missing something please post a PR or open a new 
 
 #### Updating WordPress
 
-This image is automatically kept up-to-date with WordPress core by the [wordpress-integreation-services](https://github.com/worldpeaceio/wordpress-integration-services) project.
-
-If you need to manually modify the WordPress version in the image, simply clone the repo and edit `WORDPRESS_VERSION` in the Makefile. Then run `make update_wp_version_dockerfile_all build_image generate_readme` from the repository root.
+This image is automatically kept up-to-date with WordPress core by a Github Action. If you need to manually modify the WordPress version in the image just run `echo WORDPRESS_VERSION > build/wordpress-version.txt` in the repo root.

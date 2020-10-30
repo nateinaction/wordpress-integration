@@ -1,0 +1,27 @@
+---
+name: Lint
+on:
+  push:
+    branches-ignore:
+      - 'master'
+jobs:
+  lint:
+    name: deploy-to-dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Build
+        run: make build -j 10
+      - name: Deploy to DockerHub
+        run: docker push -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_TOKEN}"
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Sync README.md with DockerHub
+        uses: ms-jpq/sync-dockerhub-readme@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: "worldpeaceio/wordpress-integration"
+          readme: "./README.md"
