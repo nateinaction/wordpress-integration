@@ -1,4 +1,4 @@
-name: ci
+name: wp-version-change
 on:
   schedule:
     - cron: "*/5 * * * *" # every 5 minutes
@@ -25,5 +25,7 @@ jobs:
       - name: Push changes to master
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Using a repo's default token will not trigger the ci action
+          # https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           branch: ${{ github.ref }}
