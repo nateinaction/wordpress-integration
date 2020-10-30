@@ -30,6 +30,8 @@ build/php%.md: vendor build/wordpress_version.txt
 	docker tag $(IMAGE_NAME):$(PHP_TAG) $(IMAGE_NAME):$(PHP_TAG)-wp$(WORDPRESS_LATEST)
 	@# WP major minor tag e.g. php7.2-wp5.0
 	docker tag $(IMAGE_NAME):$(PHP_TAG) $(IMAGE_NAME):$(PHP_TAG)-wp$(WORDPRESS_LATEST_ONLY_MAJOR)
+	@# Tag latest if running latest PHP version
+	$(shell if [ $* = $(PHP_LATEST) ]; docker tag $(IMAGE_NAME):$(PHP_TAG) $(IMAGE_NAME):latest; fi)
 	@# Test the image
 	$(DOCKER_RUN) $(IMAGE_NAME):$(PHP_TAG) "./vendor/bin/phpunit ./test"
 	@# Write the the README markdown for these tags

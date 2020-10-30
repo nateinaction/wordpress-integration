@@ -1,12 +1,15 @@
 ---
-name: Lint
+name: Deploy
 on:
   push:
-    branches-ignore:
-      - 'master'
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *" # daily
+
 jobs:
-  lint:
-    name: deploy-to-dockerhub
+  deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -21,9 +24,8 @@ jobs:
       - name: Deploy to DockerHub
         run: docker push ${GITHUB_REPOSITORY};
       - name: Sync README.md with DockerHub
-        uses: ms-jpq/sync-dockerhub-readme@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${GITHUB_REPOSITORY}
-          readme: "./README.md"
+        uses: peter-evans/dockerhub-description@v2.1.0
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+          DOCKERHUB_REPOSITORY: ${GITHUB_REPOSITORY}
