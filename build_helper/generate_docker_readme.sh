@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2001
 
+set -ex
+
 DOCKER_IMAGE_NAME=${1}
 WORDPRESS_VERSION=${2}
 PHP_VERSION=${3}
@@ -24,15 +26,15 @@ else
 fi
 
 # Add tags to array, PHP_TAG is added to the image during build
-TAGS+=("${MAJOR}.${MINOR}.${PATCH}-${PHP_TAG}")
-TAGS+=("${MAJOR}.${MINOR}-${PHP_TAG}")
+TAGS+=("${PHP_TAG}-wp${MAJOR}.${MINOR}.${PATCH}")
+TAGS+=("${PHP_TAG}-wp${MAJOR}.${MINOR}")
 
+printf "[\`${PHP_TAG}\`" >> README.md
 for DOCKER_TAG in "${TAGS[@]}"; do
-	printf "\`${DOCKER_TAG}\` " >> README.md
+	printf ", \`${DOCKER_TAG}\`" >> README.md
 done
-printf "\`${PHP_TAG}\` " >> README.md
 if [[ "${PHP_LATEST}" == "${PHP_VERSION}" ]]; then
-	printf "\`latest\` " >> README.md
+	printf ", \`latest\`" >> README.md
 fi
-printf "([${PHP_TAG}/Dockerfile](https://github.com/nateinaction/wordpress-integration/blob/master/${PHP_TAG}/Dockerfile))\n\n" >> README.md
+printf "](https://github.com/nateinaction/wordpress-integration/blob/master/Dockerfile)\n\n" >> README.md
 

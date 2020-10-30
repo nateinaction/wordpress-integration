@@ -29,10 +29,10 @@ composer_update:
 build_image:
 	@# Default tag will be php7.2
 	docker build -t $(WP_TEST_IMAGE):$(PHP_TAG) --build-arg $(PHP_VERSION) .
-	@# WP major minor patch tag e.g. 5.0.3-php7.2
-	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(WORDPRESS_VERSION)-$(PHP_TAG)
-	@# WP major minor tag e.g. 5.0-php7.2
-	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(shell make get_wp_version_makefile_major_minor_only)-$(PHP_TAG)
+	@# WP major minor patch tag e.g. php7.2-wp5.0.3
+	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(PHP_TAG)-wp$(WORDPRESS_VERSION)
+	@# WP major minor tag e.g. php7.2-wp5.0
+	docker tag $(WP_TEST_IMAGE):$(PHP_TAG) $(WP_TEST_IMAGE):$(PHP_TAG)-wp$(shell make get_wp_version_makefile_major_minor_only)
 
 test: test_image test_helpers
 
