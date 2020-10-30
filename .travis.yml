@@ -28,6 +28,6 @@ script:
 
 after_success:
   - if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
-      docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD};
+      docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_ACCESS_TOKEN};
       make publish;
     fi
