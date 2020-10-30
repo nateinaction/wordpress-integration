@@ -1,13 +1,25 @@
 ---
-name: Deploy
+name: ci
 on:
   push:
-    branches:
-      - master
   schedule:
     - cron: "0 0 * * *" # daily
 
 jobs:
+  lint:
+    name: super-linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: super-linter
+        uses: docker://github/super-linter:v3.12.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_BASH: true
+          VALIDATE_DOCKERFILE: true
+          VALIDATE_PHP: true
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
@@ -22,4 +34,5 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Deploy to DockerHub
+        if: github.ref == 'refs/heads/master'
         run: docker push ${GITHUB_REPOSITORY};
