@@ -35,4 +35,8 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Deploy to DockerHub
         if: github.ref == 'refs/heads/master'
-        run: docker push ${GITHUB_REPOSITORY};
+        run: |
+          docker push ${GITHUB_REPOSITORY};
+          curl -X POST ${DOCKERHUB_AUTOBUILD_WEBHOOK}
+        env:
+          DOCKERHUB_AUTOBUILD_WEBHOOK: ${{ secrets.DOCKERHUB_AUTOBUILD_WEBHOOK }}
