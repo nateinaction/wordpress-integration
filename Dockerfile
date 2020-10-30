@@ -24,9 +24,9 @@ RUN set -ex; \
     docker-php-ext-enable xdebug;
 
 # Install test harness
-ARG WORDPRESS_VERSION=5.5.2
+COPY wordpress_version.txt /
 RUN set -ex; \
-    curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/${WORDPRESS_VERSION}" -o "/wordpress.tar.gz"; \
+    curl "https://codeload.github.com/WordPress/wordpress-develop/tar.gz/$(cat /wordpress_version.txt)" -o "/wordpress.tar.gz"; \
     mkdir /wordpress; \
     tar -xf /wordpress.tar.gz -C /wordpress --strip-components=1; \
     rm /wordpress.tar.gz;

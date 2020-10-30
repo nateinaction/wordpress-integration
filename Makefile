@@ -1,7 +1,7 @@
 PHP_LATEST := 7.4
 PHP_VERSIONS := 7.4 7.3 7.2 7.1
 PHP_TAG = php$*
-WORDPRESS_LATEST = $(shell cat build/wordpress_version.txt)
+WORDPRESS_LATEST = $(shell cat wordpress_version.txt)
 WORDPRESS_LATEST_ONLY_MAJOR = $(shell echo $(WORDPRESS_LATEST) | sed s/\..$$//)
 DOCKER_RUN := docker run --rm -v `pwd`:/workspace -w /workspace
 IMAGE_NAME := worldpeaceio/wordpress-integration
@@ -18,11 +18,7 @@ clean:
 vendor:
 	$(DOCKER_RUN) $(COMPOSER_IMAGE) install
 
-build/wordpress_version.txt:
-	mkdir -p build
-	curl -s "https://api.wordpress.org/core/version-check/1.7/" | jq -r '.offers[0].current' > build/wordpress_version.txt
-
-build/php%.md: vendor build/wordpress_version.txt
+build/php%.md: vendor
 	mkdir -p build
 	@# Default tag will be php7.2
 	docker build -t $(IMAGE_NAME):$(PHP_TAG) --build-arg "PHP_MAJOR_VERSION=$*" .

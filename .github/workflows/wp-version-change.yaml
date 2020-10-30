@@ -1,0 +1,31 @@
+name: ci
+on:
+  schedule:
+    - cron: "5/* * * * *" # every 5 minutes
+
+jobs:
+  wp-version:
+    name: Check WordPress Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: DockerHub Login
+        run: |
+          mkdir -p build
+          # Check lastest WP version on wordpress.org
+          curl -s "https://api.wordpress.org/core/version-check/1.7/" | jq -r '.offers[0].current' > build/wordpress_version.txt
+          # Compair latest with repo version
+          diff build/wordpress_version.txt wordpress_version.txt
+          # If they're different, commit the changes
+          if [ $? = 1 ]; then;
+            mv build/wordpress_version.txt wordpress_version.txt
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git commit -m "Update WordPress to $(cat wordpress_version.txt)" -a
+          fi
+      - name: Push changes to master
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
