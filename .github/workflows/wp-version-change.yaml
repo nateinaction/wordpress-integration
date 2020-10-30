@@ -21,7 +21,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git commit -m "Update WordPress to $(cat wordpress_version.txt)" -a
-            make build -j 10
+            make clean build -j 10
           fi
       - name: Deploy to Docker Hub
         if: github.ref == 'refs/heads/master'

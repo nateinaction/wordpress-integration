@@ -24,7 +24,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Build
-        run: make build -j 10
+        run: make clean build -j 10
       - name: Deploy to DockerHub
         if: github.ref == 'refs/heads/master'
         run: |
