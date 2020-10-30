@@ -14,9 +14,9 @@ jobs:
       - name: super-linter
         uses: docker://github/super-linter:v3.12.0
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_BASH: true
           VALIDATE_DOCKERFILE: true
           VALIDATE_PYTHON: true
-          VALIDATE_MARKDOWN: true
           VALIDATE_PHP: true
