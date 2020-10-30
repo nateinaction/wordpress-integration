@@ -14,11 +14,6 @@ clean:
 	rm -rf build
 	rm README.md
 
-.PHONY: setup
-setup:
-	rm -rf .git/hooks
-	cd .git && ln -s ../git_hooks/ hooks
-
 vendor:
 	$(DOCKER_RUN) $(COMPOSER_IMAGE) install
 
