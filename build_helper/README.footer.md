@@ -11,7 +11,9 @@ docker run --rm -v `pwd`:/workspace worldpeaceio/wordpress-integration ./vendor/
 
 Available on [Docker Hub](https://hub.docker.com/r/worldpeaceio/wordpress-integration/)
 
-*This image is kept automatically up-to-date with WordPress core via [wordpress-integration-services](https://github.com/worldpeaceio/wordpress-integration-services).*
+### Supported versions:
+- [PHP](https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/)
+- [WordPress](https://codex.wordpress.org/Supported_Versions)
 
 ### What this image provides
 
