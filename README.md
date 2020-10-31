@@ -9,7 +9,7 @@
 
 
 # WordPress Integration Docker Image
-[![Build Status](https://travis-ci.com/worldpeaceio/wordpress-integration.svg?branch=develop)](https://travis-ci.com/worldpeaceio/wordpress-integration)
+![Build Status](https://github.com/worldpeaceio/wordpress-integration/workflows/Build/badge.svg)
 [![Docker Hub Pulls](https://img.shields.io/docker/pulls/worldpeaceio/wordpress-integration.svg)](https://hub.docker.com/r/worldpeaceio/wordpress-integration)
 
 This docker image sets up a WordPress integration environment that can be used to test WordPress plugins and themes.
