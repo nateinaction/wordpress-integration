@@ -26,8 +26,11 @@ jobs:
             git config --local user.name "GitHub Action"
             git remote set-url origin https://nateinaction:${GITHUB_TOKEN}@github.com/worldpeaceio/wordpress-integration.git
             echo $GITHUB_TOKEN | gh auth login --with-token
+            git stash
+
             # Check to see if a PR has already been made
             if ! gh pr checkout "${BRANCH_NAME}"; then
+              git stash pop
               # Update the readme
               make clean build -j 10
               # Create the branch
