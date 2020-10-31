@@ -48,4 +48,4 @@ jobs:
           # https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           GH_USERNAME: worldpeaceio-bot
-          GH_EMAIL: ${{ secret.WORLDPEACEIO_GITHUB_BOT_EMAIL }}
+          GH_EMAIL: ${{ secrets.WORLDPEACEIO_GITHUB_BOT_EMAIL }}
