@@ -1,0 +1,24 @@
+---
+# Build and publish images daily for security updates
+name: security-updates
+on:
+  schedule:
+    - cron: "0 0 * * *" # daily
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Build
+        run: make clean build -j 10
+      - name: Deploy to DockerHub
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_TOKEN};
+          docker push ${GITHUB_REPOSITORY};
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

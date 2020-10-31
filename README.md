@@ -9,7 +9,6 @@
 
 
 # WordPress Integration Docker Image
-[![GitHub Super-Linter](https://github.com/worldpeaceio/wordpress-integration/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Build Status](https://travis-ci.com/worldpeaceio/wordpress-integration.svg?branch=develop)](https://travis-ci.com/worldpeaceio/wordpress-integration)
 [![Docker Hub Pulls](https://img.shields.io/docker/pulls/worldpeaceio/wordpress-integration.svg)](https://hub.docker.com/r/worldpeaceio/wordpress-integration)
 
@@ -93,4 +92,4 @@ If you feel like this image is missing something please post a PR or open a new 
 
 #### Updating WordPress
 
-This image is automatically kept up-to-date with WordPress core by a Github Action. If you need to manually modify the WordPress version in the image just run `echo WORDPRESS_VERSION > wordpress-version.txt` in the repo root.
+This image is automatically kept up-to-date with WordPress core by a Github Action. If you need to manually modify the WordPress version in the image just run `echo WORDPRESS_VERSION > build/wordpress-version.txt` in the repo root.
