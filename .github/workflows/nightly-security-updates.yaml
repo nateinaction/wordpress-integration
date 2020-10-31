@@ -1,6 +1,6 @@
 ---
 # Build and publish images daily for security updates
-name: security-updates
+name: nightly-security-updates
 on:
   schedule:
     - cron: "0 0 * * *" # daily

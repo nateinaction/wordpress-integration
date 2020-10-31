@@ -1,6 +1,6 @@
 ---
 # Build and publish images on WordPress version change
-name: wp-version-change
+name: on-wp-version-change
 on:
   schedule:
     - cron: "*/5 * * * *" # Every 5 minutes
