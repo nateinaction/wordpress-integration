@@ -1,5 +1,5 @@
 ---
-name: on-push
+name: Build
 on: push
 
 jobs:
