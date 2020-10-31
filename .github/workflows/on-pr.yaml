@@ -21,8 +21,8 @@ jobs:
           VALIDATE_BASH: true
           VALIDATE_DOCKERFILE: true
           VALIDATE_PHP: true
-  deploy:
-    name: Build and Deploy
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
