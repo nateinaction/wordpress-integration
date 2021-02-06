@@ -30,7 +30,7 @@ build/php%.md: vendor
 	@# Tag latest if running latest PHP version
 	$(shell if [ $* = $(PHP_LATEST) ]; then docker tag $(IMAGE_NAME):$(PHP_TAG) $(IMAGE_NAME):latest; fi)
 	@# Test the image
-	#$(DOCKER_RUN) $(IMAGE_NAME):$(PHP_TAG) "./vendor/bin/phpunit ./test"
+	$(DOCKER_RUN) $(IMAGE_NAME):$(PHP_TAG) "./vendor/bin/phpunit ./test"
 	@# Write the the README markdown for these tags
 	printf "[%s, %s, %s%s](https://github.com/nateinaction/wordpress-integration/blob/master/Dockerfile)\n\n" \
 		"$(PHP_TAG)" \
